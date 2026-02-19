@@ -1,6 +1,7 @@
 export interface Gasto {
   idgasto: number;
   categoria: string;
+  descripcion: string;
   monto: number;
   fecha: string;
 }
@@ -27,8 +28,11 @@ export async function crearGasto(gasto: Omit<Gasto, "idgasto">) {
   });
 }
 
-export async function actualizarGasto(id: number, gasto: Omit<Gasto, "idgasto">) {
-  await fetch(`${API_URL}/${id}`, {
+export async function actualizarGasto(
+  id: number,
+  gasto: Omit<Gasto, "idgasto">
+) {
+  await fetch(`http://localhost:5001/gasto/${id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",

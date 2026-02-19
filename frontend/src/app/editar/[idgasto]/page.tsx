@@ -5,11 +5,11 @@ import { useParams, useRouter } from "next/navigation";
 import { actualizarGasto, Gasto } from "../../services/gastoService";
 
 export default function EditarGasto() {
-  const params = useParams();
+  const { idgasto } = useParams();
   const router = useRouter();
-  const idgasto = Number(params.idgasto);
 
   const [categoria, setCategoria] = useState("");
+  const [descripcion, setDescripcion] = useState("");
   const [monto, setMonto] = useState("");
   const [fecha, setFecha] = useState("");
 
@@ -21,62 +21,73 @@ export default function EditarGasto() {
       const data: Gasto = await response.json();
 
       setCategoria(data.categoria);
+      setDescripcion(data.descripcion || "");
       setMonto(String(data.monto));
       setFecha(data.fecha);
     }
 
-    if (idgasto) {
-      cargar();
-    }
+    if (idgasto) cargar();
   }, [idgasto]);
 
   async function actualizar() {
-    await actualizarGasto(idgasto, {
+    await actualizarGasto(Number(idgasto), {
       categoria,
+      descripcion,
       monto: Number(monto),
       fecha,
     });
 
-    router.push("/");
+    router.push("/gastos");
   }
 
   return (
     <div style={{ padding: 20 }}>
       <h2>Editar Gasto</h2>
 
-      <div>
-        <input
-          type="text"
-          value={categoria}
-          onChange={(e) => setCategoria(e.target.value)}
-        />
-      </div>
+      <input
+        type="text"
+        placeholder="Categoria"
+        value={categoria}
+        onChange={(e) => setCategoria(e.target.value)}
+      />
 
-      <br />
+      <br /><br />
 
-      <div>
-        <input
-          type="number"
-          value={monto}
-          onChange={(e) => setMonto(e.target.value)}
-        />
-      </div>
+      <input
+        type="text"
+        placeholder="Descripción"
+        value={descripcion}
+        onChange={(e) => setDescripcion(e.target.value)}
+      />
 
-      <br />
+      <br /><br />
 
-      <div>
-        <input
-          type="date"
-          value={fecha}
-          onChange={(e) => setFecha(e.target.value)}
-        />
-      </div>
+      <input
+        type="number"
+        value={monto}
+        onChange={(e) => setMonto(e.target.value)}
+      />
 
-      <br />
+      <br /><br />
+
+      <input
+        type="date"
+        value={fecha}
+        onChange={(e) => setFecha(e.target.value)}
+      />
+
+      <br /><br />
 
       <button
         onClick={actualizar}
-        className="bg-blue-600 text-white px-4 py-2 hover:bg-blue-700"
+        style={{
+          backgroundColor: "#2563eb",
+          color: "white",
+          padding: "6px 14px",
+          border: "none",
+          borderRadius: "4px",
+          cursor: "pointer"
+        }}
       >
         Actualizar
       </button>

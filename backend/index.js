@@ -93,6 +93,6 @@ app.get('/gasto/:idgasto', async (req,res) =>{
     }
 });
 
-app.listen(5001,()=>{
-    console.log('aplcacion ejecutando en puerto 5001')
-})
+app.listen(5001, () => {
+  console.log("aplicacion ejecutando en puerto 5001");
+});

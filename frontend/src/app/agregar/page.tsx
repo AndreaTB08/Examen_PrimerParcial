@@ -8,15 +8,22 @@ export default function AgregarGasto() {
   const router = useRouter();
 
   const [categoria, setCategoria] = useState("");
+  const [descripcion, setDescripcion] = useState("");
   const [monto, setMonto] = useState("");
   const [fecha, setFecha] = useState("");
 
   async function guardar() {
+    if (!categoria || !descripcion || !monto || !fecha) {
+      alert("Todos los campos son obligatorios");
+      return;
+    }
+
     await crearGasto({
-      categoria,
-      monto: Number(monto),
-      fecha,
-    });
+  categoria,
+  descripcion,
+  monto: Number(monto),
+  fecha,
+} as any);
 
     router.push("/");
   }
@@ -30,6 +37,15 @@ export default function AgregarGasto() {
         placeholder="Categoria"
         value={categoria}
         onChange={(e) => setCategoria(e.target.value)}
+      />
+
+      <br /><br />
+
+      <input
+        type="text"
+        placeholder="Descripcion"
+        value={descripcion}
+        onChange={(e) => setDescripcion(e.target.value)}
       />
 
       <br /><br />
@@ -51,7 +67,9 @@ export default function AgregarGasto() {
 
       <br /><br />
 
-      <button onClick={guardar}>Guardar</button>
+      <button onClick={guardar}>
+        Guardar
+      </button>
     </div>
   );
 }

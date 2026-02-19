@@ -1,5 +1,5 @@
-const {  DataTypes } = require('sequelize')
-const sequelize  =require('../db/connection');
+const { DataTypes } = require('sequelize');
+const sequelize = require('../db/connection');
 
 const Gasto = sequelize.define('gasto', {
 
@@ -12,6 +12,10 @@ const Gasto = sequelize.define('gasto', {
         type:DataTypes.STRING,
         allowNull: false
     },
+    descripcion: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
     monto:{
         type:DataTypes.STRING,
         allowNull: false
@@ -20,12 +24,10 @@ const Gasto = sequelize.define('gasto', {
         type:DataTypes.DATE,
         allowNull: false
     },
-},
-{
+
+},{
     tableName:'gasto',
     timestamps: false,
-}
+});
 
-);
-
-module.exports= Gasto
+module.exports = Gasto;
